@@ -44,7 +44,7 @@
 
 - MySQL 서버에는 다음과 같이 내장된 계정들이 있다. 내부적으로 각기 다른 목적으로 사용되므로 삭제하지 않도록 주의해야한다.
     - `'mysql.sys'@'localhost'` : MySQL 8.0부터 내장된 sys 스키마의 객체들의 DEFINER로 사용되는 계정
-    - `'mysql.session'@'localhost'` : MySQL 플러그인이 서버로 접근할 떄 사용되는 계정
+    - `'mysql.session'@'localhost'` : MySQL 플러그인이 서버로 접근할 때 사용되는 계정
     - `'mysql.infoschema'@'localhost'` : information_schema에 정의된 뷰의 DEFINER로 사용되는 계정
 - 위 계정들은 처음부터 잠겨 있는 상태이기 때문에 의도적으로 풀지 않는 한 악의적인 용도로 사용할 수 없음
 
