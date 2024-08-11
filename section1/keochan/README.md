@@ -6,7 +6,7 @@
   ```
   'svc_id'@'127.0.0.1'
   'svc_id'@'192.168.0.10'
-  'svc_id'@'%
+  'svc_id'@'%'
   ```
 - 범위가 더 좁은 것을 먼저 선택한다.
   - ex) 192.168.0.10에서 svc_id로 접근한다면, 'svc_id'@'192.168.0.10'을 이용한다.
@@ -38,7 +38,7 @@
 
 ```sql
 CREATE USER 'user'@'%'
-	IDENTIFIED WITH 'mysql_nativee_password' BY 'password'
+	IDENTIFIED WITH 'mysql_native_password' BY 'password'
 	REQUIRE NONE
 	PASSWORD EXPIRE INTERVAL 30 DAY
 	ACCOUNT LOCK
@@ -126,7 +126,7 @@ SET GLOBAL validate_password.policy='STRONG';
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'old_password';
 
 -- 비밀번호를 변경하면서, 기존 비밀번호를 세컨더리 비밀번호로 설정
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'old_password' RETAIN CURRENT PASSWORD;
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password' RETAIN CURRENT PASSWORD;
 
 -- 세컨더리 비밀번호 제거
 ALTER USER 'root'@'localhost' DISCARD OLD PASSWORD;
@@ -162,7 +162,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON employees.department TO 'user'@'localhos
 
 ```sql
 -- 특정 컬럼 권한 부여 (모두 조회, 특정 column 업데이트) 
-GRANT SELECT, UPDATE(dept_name) ON employees.departmetn TO 'user'@'localhost';
+GRANT SELECT, UPDATE(dept_name) ON employees.department TO 'user'@'localhost';
 ```
 - 컬럼 단위 권한이 하나라도 설정된다면, 나머지 모든 테이블의 모든 컬럼에 대해서도 권한 체크를 하기 때문에, 전체적인 성능에 영향을 미칠 수 있다.
 - 컬럼 단위 접근이 필요하가면, 권한을 허용하고자 하는 컬럼만으로 뷰(VIEW)를 만들어 사용하는 것도 방법이다.
