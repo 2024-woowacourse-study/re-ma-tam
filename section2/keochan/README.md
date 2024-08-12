@@ -4,6 +4,8 @@
 
 ### 1. MySQL의 전체 구조
 
+<center><img src="./images/mysql-structure.png" width="50%"/></center>
+
 - MySQL 서버는 다른 DBMS에 비해 구조가 독특함
   - 다른 DBMS에서 가질 수 없는 혜택을 누리기도 함
   - 다른 DBMS에서 문제되지 않을 것들이 가끔 문제가 됨
@@ -27,6 +29,8 @@
   - InnoDB 스토리지 엔진 또한 이 핸들러 API를 통해 MySQL 엔진과 데이터를 주고 받는다.
 
 ### 2. MySQL 스레딩 구조
+
+<center><img src="./images/mysql-thread-structure.png" width="50%"/></center>
 
 - MySQL 서버는 스레드 기반으로 작동 (프로세스 기반 X)
   - 포그라운드 스레드와 백그라운드 스레드로 구분할 수 있다
@@ -118,6 +122,8 @@ SELECT * FROM mysql.component;
 
 ### 6. 쿼리 실행 구조
 
+<center><img src="./images/query-explain-structure.png" width="50%"/></center>
+
 #### 쿼리 파서
 - 사용자의 요청으로 들어온 쿼리 문장을 토큰으로 분리해 트리 형태의 구조(파서 트리)로 만들어 내는 작업
 - 쿼리 문장의 기본 문법 오류는 이 과정에서 발견, 사용자에게 오류 메시지를 전달
@@ -191,6 +197,8 @@ SELECT * FROM mysql.component;
         ```
 
 ## 4.2 InnoDB 스토리지 엔진 아키텍쳐
+
+<center><img src="./images/innodb-storage-engine.png" width="50%"/></center>
 
 ### 1. 프라이머리 키에 의한 클러스터링
 
@@ -325,6 +333,9 @@ SELECT * FROM mysql.component;
   - 버퍼 풀에 할당할 수 있는 메모리 공간이 40GB 이하 수준이라면 기본 값인 8을 유지하고, 40GB 이상이라면 버퍼 풀 인스턴스당 5GB 정도가 되게 인스턴스 개수를 설정하는 것이 좋다.
 
 #### 버퍼 풀의 구조
+
+<center><img src="./images/lru-list-structure.png" width="50%"/></center>
+
 - InnoDB 스토리지 엔진은 버퍼 풀이라는 거대한 메모리 공간을 페이지 크기(`innodb_page_size`)의 조각으로 쪼개어 InnoDB 스토리지 엔진이 데이터를 필요로 할 때 해당 데이터 페이지를 읽어서 각 조각에 저장한다.
 - 버퍼 풀의 페이지 크기 조각을 관리하기 위해 InnoDB 스토리지 엔진은 크게 3개의 자료 구조로 관리함
   - LRU(Least Recently Used) 리스트
@@ -349,6 +360,8 @@ SELECT * FROM mysql.component;
   4. 필요한 데이터가 자주 접근됐다면 해당 페이지의 인덱스 키를 어댑티스 해시 인덱스에 추가
 
 #### 버퍼 풀과 리두 로그
+
+<center><img src="./images/buffer-pool-read-log.png" width="50%"/></center>
 
 - InnoDB 버퍼 풀의 클린 페이지와 더티 페이지
   - 클린 페이지(Clean Page) : 디스크에서 읽은 상태로 전혀 변경되지 않는 페이지
@@ -423,6 +436,8 @@ SELECT * FROM mysql.component;
 
 ### 8. Double Write Buffer
 
+<center><img src="./images/double-write.png" width="50%"/></center>
+
 - 문제 : 리두 로그는 페이지의 변경된 내용만 기록하므로, 디스크 파일로 플러시할 때 일부만 기록되는 문제가 발생하면 그 페이지의 내용은 복구할 수 없다.
 - Double-Write 기법
   - InnoDB 스토리지 엔진은 실제 데이터 파일을 기록하기 전에 A~E 까지의 더티 데이터를 우선 묶어서 한 번의 디스크 쓰기로 시스템 테이블 스페이스의 Double Write 버퍼에 기록한다.
@@ -460,6 +475,9 @@ SELECT * FROM mysql.component;
     ```
 
 #### 언두 테이블 스페이스 관리
+
+<center><img src="./images/undo-table-space.png" width="50%"/></center>
+
 - 언두 테이블 스페이스 (Undo Tablespace)
   - 언두 로그가 저장되는 공간
   - MySQL 5.6 이전에는 언두 로그가 모두 시스템 테이블스페이스(ibdata.ibd)에 저장됐다.
@@ -636,6 +654,8 @@ SELECT * FROM mysql.component;
   - 굳이 MEMORY 스토리지 엔진을 선택해서 얻을 수 있는 장점이 없어졌으며, 이전 버전과의 호환성 유지 차원일 뿐 향후 버전에서는 제거될 것으로 보인다.
 
 ## 4.3 MyISAM 스토리지 엔진 아키텍쳐
+
+<center><img src="images/myisam-storage-engine.png" width="50%"/></center>
 
 (생략)
 
